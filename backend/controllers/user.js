@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const MaskData = require("maskdata");
 
 exports.signup = (req, res, next) => {
   bcrypt
@@ -8,6 +9,7 @@ exports.signup = (req, res, next) => {
     .then((hash) => {
       const user = new User({
         email: req.body.email,
+        emailDisplay: MaskData.maskEmail2(req.body.email),
         password: hash,
       });
       user
